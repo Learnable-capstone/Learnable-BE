@@ -63,7 +63,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BaseException.class)
     public BaseResponse<Void> handleConversionFailed(BaseException e) {
 
-        log.warn("Error Code={}, Error Message={}", e.getCode(), e.getMessage());
+        log.error("Error Code={}, Error Message={}", e.getCode(), e.getMessage());
         return BaseResponse.error(e.getCode(), e.getMessage());
+    }
+
+    @ExceptionHandler(Exception.class)
+    public BaseResponse<Void> handleException(Exception e) {
+        log.error("Exception Message={}", e.getMessage());
+        return BaseResponse.error(BAD_REQUEST_ERROR.getCode(), e.getMessage());
     }
 }
