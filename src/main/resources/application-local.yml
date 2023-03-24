@@ -16,3 +16,12 @@ spring:
   sql:
     init:
       mode: always
+openai-service:
+  api-key: ${OPEN_AI_API_KEY}
+  gpt-model: gpt-3.5-turbo
+  http-client:
+    read-timeout: 3000
+    connect-timeout: 3000
+  urls:
+    base-url: https://api.openai.com/v1
+    chat-url: /chat/completions
