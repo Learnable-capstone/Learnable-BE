@@ -10,7 +10,6 @@ services:
       - MYSQL_DATABASE=learnable
       - MYSQL_ROOT_PASSWORD=learnable-1234
       - TZ=Asia/Seoul
-    command:
-      - --character-set-server=utf8mb4
-      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./config:/etc/mysql/conf.d
     platform: linux/amd64
