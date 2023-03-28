@@ -10,6 +10,11 @@ public enum ResponseCodeAndMessages implements CodeAndMessages {
      * OAuth
      */
     OAUTH_LOGIN_SUCCESS("S-OA001", "로그인(혹은 회원가입)에 성공했습니다."),
+
+    /**
+     * ChatRoom
+     */
+    CREATE_CHAT_ROOM_SUCCESS("S-CR001", "채팅방 생성에 성공했습니다."),
     ;
 
     private final String code;
