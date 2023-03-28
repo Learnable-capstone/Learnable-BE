@@ -1,5 +1,6 @@
 package dev.be.learnable.core.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
@@ -12,6 +13,7 @@ import dev.be.learnable.core.repository.ChatRoomRepository;
 import dev.be.learnable.core.repository.MemberRepository;
 import dev.be.learnable.core.repository.SubjectRepository;
 import java.time.LocalDateTime;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -43,11 +45,32 @@ class ChatRoomServiceTest {
         then(chatRoomRepository).should().save(any(ChatRoom.class));
     }
 
+    @Test
+    @DisplayName("채팅방 전체 리스트 조회 성공 테스트")
+    void findAllChatRoom_success() throws Exception {
+        //given
+        Long memberId = 1L;
+        ChatRoom chatRoom1 = createChatRoom(memberId);
+        ChatRoom chatRoom2 = createChatRoom(memberId);
+        given(chatRoomRepository.findChatRoomsByMember_Id(memberId))
+            .willReturn(List.of(
+                chatRoom1,
+                chatRoom2
+            ));
 
+        //when
+        List<ChatRoomDto> actual = chatRoomService.findAll(memberId);
 
+        //then
+        assertThat(actual).hasSize(2);
+        then(chatRoomRepository).should().findChatRoomsByMember_Id(memberId);
+    }
 
     private ChatRoom createChatRoom() {
         return createChatRoom(1L, 1L);
+    }
+    private ChatRoom createChatRoom(Long memberId) {
+        return createChatRoom(memberId, 1L);
     }
     private ChatRoom createChatRoom(Long memberId, Long subjectId) {
         return ChatRoom.of(
