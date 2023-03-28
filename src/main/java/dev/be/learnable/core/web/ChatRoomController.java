@@ -21,7 +21,7 @@ public class ChatRoomController {
     public BaseResponse<Void> create(
         @RequestBody ChatRoomRequest chatRoomRequest
     ) {
-        chatRoomService.createChatRoom(chatRoomRequest.toDto());
+        chatRoomService.create(chatRoomRequest.toDto());
         return new BaseResponse<>(CREATE_CHAT_ROOM_SUCCESS, null);
     }
 }

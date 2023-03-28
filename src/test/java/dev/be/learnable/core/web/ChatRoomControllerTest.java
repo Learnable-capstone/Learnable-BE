@@ -44,7 +44,7 @@ class ChatRoomControllerTest {
         //given
         ChatRoomRequest chatRoomRequest = ChatRoomRequest.of(1L, 1L, "test-title");
         BaseResponse<Void> baseResponse = new BaseResponse<>(CREATE_CHAT_ROOM_SUCCESS, null);
-        willDoNothing().given(chatRoomService).createChatRoom(any(ChatRoomDto.class));
+        willDoNothing().given(chatRoomService).create(any(ChatRoomDto.class));
 
         //when & then
         // TODO 로그인 개발되면 헤더 부분에 토큰 내용 추가해야함
@@ -57,7 +57,7 @@ class ChatRoomControllerTest {
             .andExpect(status().isOk())
             .andExpect(content().string(objectMapper.writeValueAsString(baseResponse)));
 
-        then(chatRoomService).should().createChatRoom(any(ChatRoomDto.class));
+        then(chatRoomService).should().create(any(ChatRoomDto.class));
     }
 
 

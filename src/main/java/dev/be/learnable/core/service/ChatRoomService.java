@@ -1,6 +1,5 @@
 package dev.be.learnable.core.service;
 
-import dev.be.learnable.core.domain.ChatRoom;
 import dev.be.learnable.core.domain.Member;
 import dev.be.learnable.core.domain.Subject;
 import dev.be.learnable.core.dto.ChatRoomDto;
@@ -23,7 +22,8 @@ public class ChatRoomService {
     private final SubjectRepository subjectRepository;
 
     @Transactional
-    public void createChatRoom(ChatRoomDto chatRoomDto) {
+    public void create(ChatRoomDto chatRoomDto) {
+        log.info("[채팅방 생성] chatRoomDto = {}", chatRoomDto);
         Member member = memberRepository.getReferenceById(chatRoomDto.getMemberId());
         Subject subject = subjectRepository.getReferenceById(chatRoomDto.getSubjectId());
         chatRoomRepository.save(chatRoomDto.toEntity(member, subject));

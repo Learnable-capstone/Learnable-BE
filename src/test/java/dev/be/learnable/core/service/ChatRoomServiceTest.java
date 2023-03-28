@@ -37,7 +37,7 @@ class ChatRoomServiceTest {
         given(chatRoomRepository.save(any(ChatRoom.class))).willReturn(createChatRoom());
 
         //when
-        chatRoomService.createChatRoom(dto);
+        chatRoomService.create(dto);
 
         //then
         then(chatRoomRepository).should().save(any(ChatRoom.class));
