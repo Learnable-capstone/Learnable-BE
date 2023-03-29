@@ -9,6 +9,7 @@ import dev.be.learnable.core.domain.ChatRoom;
 import dev.be.learnable.core.domain.Member;
 import dev.be.learnable.core.domain.Subject;
 import dev.be.learnable.core.dto.ChatRoomDto;
+import dev.be.learnable.core.dto.response.ChatRoomResponse;
 import dev.be.learnable.core.repository.ChatRoomRepository;
 import dev.be.learnable.core.repository.MemberRepository;
 import dev.be.learnable.core.repository.SubjectRepository;
@@ -59,10 +60,10 @@ class ChatRoomServiceTest {
             ));
 
         //when
-        List<ChatRoomDto> actual = chatRoomService.findAll(memberId);
+        List<ChatRoomResponse> chatRoomResponses = chatRoomService.findAll(memberId);
 
         //then
-        assertThat(actual).hasSize(2);
+        assertThat(chatRoomResponses).hasSize(2);
         then(chatRoomRepository).should().findChatRoomsByMember_Id(memberId);
     }
 
@@ -104,6 +105,7 @@ class ChatRoomServiceTest {
     // 테스트 데이터 생성
     private ChatRoomDto createChatRoomDto() {
         return ChatRoomDto.of(
+            1L,
             1L,
             1L,
             "test-title",
