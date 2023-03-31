@@ -1,6 +1,6 @@
 -- 멤버 1명
-insert into member (username, password, email, role, social_type, social_id, created_at, updated_at) values
-('테스트한글', 'test1234', 'test@gmail.com', 'ROLE_USER', 'google', 'google_id', now(), now());
+insert into member (username, email, role, social_type, social_id, created_at, updated_at) values
+('테스트한글', 'test@gmail.com', 'ROLE_USER', 'google', 'google_id', now(), now());
 
 -- 주제 3개
 insert into subject (subject_name, created_at, updated_at) values
