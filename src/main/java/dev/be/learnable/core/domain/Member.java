@@ -1,46 +1,49 @@
 package dev.be.learnable.core.domain;
 
 
-import static javax.persistence.GenerationType.*;
+import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Getter
 @Setter
 @Entity
 @ToString(callSuper = true)
+@DynamicUpdate
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member extends BaseEntity {
 
     @Id @GeneratedValue(strategy = IDENTITY)
     private Long id;
     private String username;
-    private String password;
     private String email;
     private String role; // ROLE_USER , ROLE_ADMIN
-    private String social_type;
-    private String social_id;
+    @Column(name = "social_type")
+    private String socialtype;
+    @Column(name = "social_id")
+    private String socialid;
 
     @Builder
-    private Member(String username, String password, String email, String role, String social_type, String social_id){
+    private Member(String username, String email, String role, String social_type, String social_id){
         this.username = username;
-        this.password = password;
         this.email = email;
         this.role = role;
-        this.social_type = social_type;
-        this.social_id = social_id;
+        this.socialtype = social_type;
+        this.socialid = social_id;
     }
 
-    public static Member of(String username, String password, String email, String role, String social_type, String social_id) {
-        return new Member(username, password, email, role, social_type, social_id);
+    public static Member of(String username, String email, String role, String social_type, String social_id) {
+        return new Member(username, email,role, social_type, social_id);
+    }
+    public Member update(String username, String email){
+        this.username = username;
+        this.email = email;
+        return this;
     }
 }
