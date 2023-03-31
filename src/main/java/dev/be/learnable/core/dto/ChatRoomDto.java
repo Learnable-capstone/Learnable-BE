@@ -27,7 +27,7 @@ public class ChatRoomDto {
         return ChatRoomDto.of(id, memberId, subjectId, title, null, null);
     }
     public static ChatRoomDto from(ChatRoom chatRoom) {
-        return new ChatRoomDto(
+        return ChatRoomDto.of(
             chatRoom.getId(),
             chatRoom.getMember().getId(),
             chatRoom.getSubject().getId(),
