@@ -1,13 +1,17 @@
 package dev.be.learnable.core.web;
 
 import static dev.be.learnable.common.response.ResponseCodeAndMessages.CREATE_CHAT_ROOM_SUCCESS;
+import static dev.be.learnable.common.response.ResponseCodeAndMessages.DELETE_CHAT_ROOM_SUCCESS;
 import static dev.be.learnable.common.response.ResponseCodeAndMessages.FIND_ALL_CHAT_ROOM_SUCCESS;
+import static dev.be.learnable.common.response.ResponseCodeAndMessages.FIND_ONE_CHAT_ROOM_SUCCESS;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.BDDMockito.willDoNothing;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -17,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.be.learnable.common.response.BaseResponse;
 import dev.be.learnable.core.dto.ChatRoomDto;
 import dev.be.learnable.core.dto.request.ChatRoomRequest;
+import dev.be.learnable.core.dto.response.ChatRoomDetailResponse;
 import dev.be.learnable.core.dto.response.ChatRoomsResponse;
 import dev.be.learnable.core.service.ChatRoomService;
 import java.util.Collections;
@@ -54,7 +59,6 @@ class ChatRoomControllerTest {
         willDoNothing().given(chatRoomService).create(any(ChatRoomDto.class));
 
         //when & then
-        // TODO 로그인 개발되면 헤더 부분에 토큰 내용 추가해야함
         mvc.perform(
             post("/chatrooms")
                 .content(objectMapper.writeValueAsString(chatRoomRequest))
@@ -83,6 +87,44 @@ class ChatRoomControllerTest {
             .andExpect(content().string(objectMapper.writeValueAsString(baseResponse)));
 
         then(chatRoomService).should().findAll(anyLong());
+    }
+
+    @Test
+    @DisplayName("[GET] 채팅방 단일 조회 성공 테스트")
+    void findOneChatRoom_success() throws Exception {
+        //given
+        Long chatroomId = 1L;
+        ChatRoomDetailResponse response = ChatRoomDetailResponse.of(chatroomId, "title", "network",Collections.emptyList(), Collections.emptyList());
+        BaseResponse<ChatRoomDetailResponse> baseResponse = new BaseResponse<>(FIND_ONE_CHAT_ROOM_SUCCESS, response);
+        given(chatRoomService.findOne(chatroomId)).willReturn(response);
+
+        //when & then
+        mvc.perform(get("/chatrooms/1")
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(status().isOk())
+            .andExpect(content().string(objectMapper.writeValueAsString(baseResponse)));
+        then(chatRoomService).should().findOne(anyLong());
+    }
+
+    @Test
+    @DisplayName("[DELETE] 채팅방 삭제 성공 테스트")
+    void deleteChatRoom_success() throws Exception {
+        //given
+        Long chatroomId = 1L;
+        BaseResponse<Void> baseResponse = new BaseResponse<>(DELETE_CHAT_ROOM_SUCCESS, null);
+        willDoNothing().given(chatRoomService).delete(chatroomId);
+
+        //when & then
+        mvc.perform(
+                delete("/chatrooms/" + chatroomId)
+                    .accept(APPLICATION_JSON)
+                    .contentType(APPLICATION_JSON)
+            )
+            .andExpect(status().isOk())
+            .andExpect(content().string(objectMapper.writeValueAsString(baseResponse)));
+
+        then(chatRoomService).should().delete(chatroomId);
     }
 
 

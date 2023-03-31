@@ -4,17 +4,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
+import static org.mockito.BDDMockito.willDoNothing;
 
+import dev.be.learnable.core.domain.BotMessage;
 import dev.be.learnable.core.domain.ChatRoom;
 import dev.be.learnable.core.domain.Member;
 import dev.be.learnable.core.domain.Subject;
+import dev.be.learnable.core.domain.UserMessage;
 import dev.be.learnable.core.dto.ChatRoomDto;
 import dev.be.learnable.core.dto.response.ChatRoomResponse;
+import dev.be.learnable.core.dto.response.ChatRoomDetailResponse;
+import dev.be.learnable.core.repository.BotMessageRepository;
 import dev.be.learnable.core.repository.ChatRoomRepository;
 import dev.be.learnable.core.repository.MemberRepository;
 import dev.be.learnable.core.repository.SubjectRepository;
+import dev.be.learnable.core.repository.UserMessageRepository;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,6 +38,8 @@ class ChatRoomServiceTest {
     @Mock private ChatRoomRepository chatRoomRepository;
     @Mock private MemberRepository memberRepository;
     @Mock private SubjectRepository subjectRepository;
+    @Mock private BotMessageRepository botMessageRepository;
+    @Mock private UserMessageRepository userMessageRepository;
 
     @Test
     @DisplayName("채팅방 생성 성공 테스트")
@@ -51,8 +60,8 @@ class ChatRoomServiceTest {
     void findAllChatRoom_success() throws Exception {
         //given
         Long memberId = 1L;
-        ChatRoom chatRoom1 = createChatRoom(memberId);
-        ChatRoom chatRoom2 = createChatRoom(memberId);
+        ChatRoom chatRoom1 = createChatRoom();
+        ChatRoom chatRoom2 = createChatRoom();
         given(chatRoomRepository.findChatRoomsByMember_Id(memberId))
             .willReturn(List.of(
                 chatRoom1,
@@ -67,18 +76,94 @@ class ChatRoomServiceTest {
         then(chatRoomRepository).should().findChatRoomsByMember_Id(memberId);
     }
 
+    @Test
+    @DisplayName("채팅방 단일 조회 성공 테스트")
+    void findOneChatRoom_success() throws Exception {
+        //given
+        Long chatroomId = 1L;
+        ChatRoom chatRoom = createChatRoom();
+        BotMessage botMessage1 = createBotMessage(1L);
+        BotMessage botMessage2 = createBotMessage(2L);
+
+        UserMessage userMessage1 = createUserMessage(1L);
+        UserMessage userMessage2 = createUserMessage(2L);
+
+        given(botMessageRepository.findBotMessageByChatRoom_Id(chatroomId))
+            .willReturn(List.of(
+                botMessage1,
+                botMessage2
+            ));
+
+        given(userMessageRepository.findUserMessageByChatRoom_Id(chatroomId))
+            .willReturn(List.of(
+                userMessage1,
+                userMessage2
+            ));
+
+
+        given(chatRoomRepository.findById(chatroomId))
+            .willReturn(Optional.of(chatRoom));
+
+        //when
+        ChatRoomDetailResponse response = chatRoomService.findOne(chatroomId);
+
+        //then
+        assertThat(response.getBotMessages()).hasSize(2);
+        assertThat(response.getUserMessages()).hasSize(2);
+        then(botMessageRepository).should().findBotMessageByChatRoom_Id(chatroomId);
+        then(userMessageRepository).should().findUserMessageByChatRoom_Id(chatroomId);
+    }
+
+    @Test
+    @DisplayName("채팅방 삭제 성공 테스트")
+    void deleteChatRoom_success() {
+        //given
+        Long chatroomId = 1L;
+        createChatRoom(chatroomId);
+        willDoNothing().given(chatRoomRepository).deleteById(chatroomId);
+
+        //when
+        chatRoomService.delete(chatroomId);
+
+        //then
+        then(chatRoomRepository).should().deleteById(chatroomId);
+    }
+
     private ChatRoom createChatRoom() {
-        return createChatRoom(1L, 1L);
+        return createChatRoom(1L);
     }
-    private ChatRoom createChatRoom(Long memberId) {
-        return createChatRoom(memberId, 1L);
-    }
-    private ChatRoom createChatRoom(Long memberId, Long subjectId) {
-        return ChatRoom.of(
-            createMember(memberId),
-            createSubject(subjectId),
+
+    private ChatRoom createChatRoom(Long chatroomId) {
+
+        ChatRoom chatRoom = ChatRoom.of(
+            createMember(1L),
+            createSubject(1L),
             "title"
         );
+        ReflectionTestUtils.setField(chatRoom, "id", chatroomId);
+        return chatRoom;
+    }
+
+
+
+    private BotMessage createBotMessage(Long botMessageId) {
+        BotMessage botMessage = BotMessage.of(
+            createChatRoom(),
+            "content",
+            Boolean.FALSE
+        );
+        ReflectionTestUtils.setField(botMessage, "id", botMessageId);
+        return botMessage;
+    }
+
+    private UserMessage createUserMessage(Long userMessageId) {
+        UserMessage userMessage = UserMessage.of(
+            createChatRoom(),
+            "content",
+            Boolean.FALSE
+        );
+        ReflectionTestUtils.setField(userMessage, "id", userMessageId);
+        return userMessage;
     }
 
     private Subject createSubject(Long subjectId) {
