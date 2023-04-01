@@ -1,11 +1,13 @@
 package dev.be.learnable.core.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.InstanceOfAssertFactories.BOOLEAN;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.BDDMockito.willDoNothing;
 
+import dev.be.learnable.common.exception.NotFoundBotMessageException;
 import dev.be.learnable.core.domain.BotMessage;
 import dev.be.learnable.core.domain.ChatRoom;
 import dev.be.learnable.core.domain.Member;
@@ -114,6 +116,35 @@ class ChatRoomServiceTest {
         then(userMessageRepository).should().findUserMessageByChatRoom_Id(chatroomId);
     }
 
+    @Test
+    @DisplayName("채팅방 메시지 북마크 성공 테스트")
+    void bookmarkChatRoom_success() {
+        //given
+        BotMessage botMessage = createBotMessage(1L);
+        given(botMessageRepository.findById(1L)).willReturn(Optional.of(botMessage));
+
+        //when
+        chatRoomService.isBookmarked(1L);
+
+        //then
+        assertThat(botMessage.getIsBookmarked()).isEqualTo(Boolean.TRUE);
+        then(botMessageRepository).should().findById(1L);
+    }
+
+    @Test
+    @DisplayName("채팅방 메시지 북마크 취소 성공 테스트")
+    void unBookmarkChatRoom_success() {
+        //given
+        BotMessage botMessage = createBotMessage(1L);
+        given(botMessageRepository.findById(1L)).willReturn(Optional.of(botMessage));
+
+        //when
+        chatRoomService.isUnBookmarked(1L);
+
+        //then
+        assertThat(botMessage.getIsBookmarked()).isEqualTo(Boolean.FALSE);
+        then(botMessageRepository).should().findById(1L);
+    }
     @Test
     @DisplayName("채팅방 삭제 성공 테스트")
     void deleteChatRoom_success() {

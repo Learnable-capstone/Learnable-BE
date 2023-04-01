@@ -1,8 +1,11 @@
 package dev.be.learnable.core.service;
 
+import static java.lang.Boolean.*;
 import static java.util.stream.Collectors.toList;
 
+import dev.be.learnable.common.exception.NotFoundBotMessageException;
 import dev.be.learnable.common.exception.NotFoundChatRoomException;
+import dev.be.learnable.core.domain.BotMessage;
 import dev.be.learnable.core.domain.ChatRoom;
 import dev.be.learnable.core.domain.Member;
 import dev.be.learnable.core.domain.Subject;
@@ -73,6 +76,27 @@ public class ChatRoomService {
                 .collect(toList());
 
         return ChatRoomDetailResponse.of(chatroomId, chatRoom.getTitle(), chatRoom.getSubject().getSubjectName(), botMessageResponses, userMessageResponses);
+    }
+
+
+    @Transactional
+    public void isBookmarked(Long botMessageId) {
+        log.info("[메시지 북마크 하기] botMessageId = {}", botMessageId);
+
+        BotMessage botMessage = botMessageRepository.findById(botMessageId)
+            .orElseThrow(NotFoundBotMessageException::new);
+
+        botMessage.updateBookmarked(TRUE);
+    }
+
+    @Transactional
+    public void isUnBookmarked(Long botMessageId) {
+        log.info("[메시지 북마크 취소하기] botMessageId = {}", botMessageId);
+
+        BotMessage botMessage = botMessageRepository.findById(botMessageId)
+            .orElseThrow(NotFoundBotMessageException::new);
+
+        botMessage.updateBookmarked(FALSE);
     }
 
     @Transactional
