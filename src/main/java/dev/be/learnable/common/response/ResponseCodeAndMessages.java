@@ -17,7 +17,9 @@ public enum ResponseCodeAndMessages implements CodeAndMessages {
     CREATE_CHAT_ROOM_SUCCESS("S-CR001", "채팅방 생성에 성공했습니다."),
     FIND_ALL_CHAT_ROOM_SUCCESS("S-CR002", "채팅방 전체 조회에 성공했습니다."),
     FIND_ONE_CHAT_ROOM_SUCCESS("S-CR003", "채팅방 단일 조회에 성공했습니다."),
-    DELETE_CHAT_ROOM_SUCCESS("S-CR004", "채팅방 삭제에 성공했습니다."),
+    BOOKMARK_MESSAGE_SUCCESS("S-CR004", "메시지 북마크에 성공했습니다."),
+    UN_BOOKMARK_MESSAGE_SUCCESS("S-CR005", "메시지 북마크 취소에 성공했습니다."),
+    DELETE_CHAT_ROOM_SUCCESS("S-CR005", "채팅방 삭제에 성공했습니다."),
     ;
 
     private final String code;

@@ -18,6 +18,7 @@ public enum ErrorCodeAndMessages implements CodeAndMessages {
      */
     NOT_FOUND_ERROR("E-NF001", "존재하지 않습니다."),
     NOT_FOUND_CHAT_ROOM_ERROR("E-NF002", "해당 ID를 가진 채팅방이 존재하지 않습니다."),
+    NOT_FOUND_BOT_MESSAGE_ERROR("E-NF003", "해당 ID를 가진 채팅이 존재하지 않습니다."),
     ;
 
 
