@@ -14,8 +14,8 @@ public class MemberDto {
     private final String username;
     private final String email;
     private final String role;
-    private final String socialtype;
-    private final String socialid;
+    private final String socialType;
+    private final String socialId;
     private final LocalDateTime createdAt;
     private final LocalDateTime modifiedAt;
 
@@ -24,8 +24,8 @@ public class MemberDto {
             member.getUsername(),
             member.getEmail(),
             member.getRole(),
-            member.getSocialtype(),
-            member.getSocialid(),
+            member.getSocialType(),
+            member.getSocialId(),
             member.getCreatedAt(),
             member.getUpdatedAt()
         );

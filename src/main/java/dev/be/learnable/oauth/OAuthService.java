@@ -36,7 +36,7 @@ public class OAuthService implements OAuth2UserService<OAuth2UserRequest, OAuth2
         Map<String, Object> attributes = oAuth2User.getAttributes(); // OAuth 서비스의 유저 정보들
 
         Member member = OAuthAttributes.extract(registrationId, attributes); // registrationId에 따라 유저 정보를 통해 공통된 Member 객체로 만들어 줌
-        member.setSocialtype(registrationId);
+        member.setSocialType(registrationId);
         member = saveOrUpdate(member);
 
         Map<String, Object> customAttribute = customAttribute(attributes, userNameAttributeName, member, registrationId);
@@ -49,7 +49,7 @@ public class OAuthService implements OAuth2UserService<OAuth2UserRequest, OAuth2
     private Map customAttribute(Map attributes, String userNameAttributeName, Member member, String registrationId) {
         Map<String, Object> customAttribute = new LinkedHashMap<>();
         customAttribute.put(userNameAttributeName, attributes.get(userNameAttributeName));
-        customAttribute.put("social_type", registrationId);
+        customAttribute.put("socialType", registrationId);
         customAttribute.put("username", member.getUsername());
         customAttribute.put("email", member.getEmail());
         return customAttribute;
@@ -58,11 +58,11 @@ public class OAuthService implements OAuth2UserService<OAuth2UserRequest, OAuth2
 
     private Member saveOrUpdate(Member member) {
 
-        Member savedmember = memberRepository.findByEmailAndSocialtype(member.getEmail(), member.getSocialtype())
+        Member savedmember = memberRepository.findByEmailAndSocialType(member.getEmail(), member.getSocialType())
                 .map(m -> m.update(member.getUsername(), member.getEmail())) // OAuth 서비스 사이트에서 유저 정보 변경이 있을 수 있기 때문에 우리 DB에도 update
                 .orElse(Member.of(member.getUsername(), member.getEmail(), member.getRole(),
-                        member.getSocialtype()
-                , member.getSocialid()));
+                        member.getSocialType()
+                , member.getSocialId()));
 
         return memberRepository.save(savedmember);
     }

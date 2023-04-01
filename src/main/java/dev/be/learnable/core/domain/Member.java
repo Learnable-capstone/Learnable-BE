@@ -24,22 +24,20 @@ public class Member extends BaseEntity {
     private String username;
     private String email;
     private String role; // ROLE_USER , ROLE_ADMIN
-    @Column(name = "social_type")
-    private String socialtype;
-    @Column(name = "social_id")
-    private String socialid;
+    private String socialType;
+    private String socialId;
 
     @Builder
-    private Member(String username, String email, String role, String social_type, String social_id){
+    private Member(String username, String email, String role, String socialType, String socialId){
         this.username = username;
         this.email = email;
         this.role = role;
-        this.socialtype = social_type;
-        this.socialid = social_id;
+        this.socialType = socialType;
+        this.socialId = socialId;
     }
 
-    public static Member of(String username, String email, String role, String social_type, String social_id) {
-        return new Member(username, email,role, social_type, social_id);
+    public static Member of(String username, String email, String role, String socialType, String socialId) {
+        return new Member(username, email,role, socialType, socialId);
     }
     public Member update(String username, String email){
         this.username = username;
