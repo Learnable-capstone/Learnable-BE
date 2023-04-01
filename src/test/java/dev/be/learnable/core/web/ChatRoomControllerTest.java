@@ -4,15 +4,17 @@ import static dev.be.learnable.common.response.ResponseCodeAndMessages.CREATE_CH
 import static dev.be.learnable.common.response.ResponseCodeAndMessages.DELETE_CHAT_ROOM_SUCCESS;
 import static dev.be.learnable.common.response.ResponseCodeAndMessages.FIND_ALL_CHAT_ROOM_SUCCESS;
 import static dev.be.learnable.common.response.ResponseCodeAndMessages.FIND_ONE_CHAT_ROOM_SUCCESS;
+import static dev.be.learnable.common.response.ResponseCodeAndMessages.BOOKMARK_MESSAGE_SUCCESS;
+import static dev.be.learnable.common.response.ResponseCodeAndMessages.UN_BOOKMARK_MESSAGE_SUCCESS;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.BDDMockito.willDoNothing;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -105,6 +107,46 @@ class ChatRoomControllerTest {
             .andExpect(status().isOk())
             .andExpect(content().string(objectMapper.writeValueAsString(baseResponse)));
         then(chatRoomService).should().findOne(anyLong());
+    }
+
+    @Test
+    @DisplayName("[PATCH] 채팅방 메시지 북마크 성공 테스트")
+    void bookmarkChatRoom_success() throws Exception {
+        //given
+        Long botMessageId = 1L;
+        BaseResponse<Void> baseResponse = new BaseResponse<>(BOOKMARK_MESSAGE_SUCCESS, null);
+        willDoNothing().given(chatRoomService).isBookmarked(botMessageId);
+
+        //when & then
+        mvc.perform(
+                patch("/chatrooms/bookmarks/" + botMessageId)
+                    .accept(APPLICATION_JSON)
+                    .contentType(APPLICATION_JSON)
+            )
+            .andExpect(status().isOk())
+            .andExpect(content().string(objectMapper.writeValueAsString(baseResponse)));
+
+        then(chatRoomService).should().isBookmarked(botMessageId);
+    }
+
+    @Test
+    @DisplayName("[PATCH] 채팅방 메시지 북마크 취소 성공 테스트")
+    void unBookmarkChatRoom_success() throws Exception {
+        //given
+        Long botMessageId = 1L;
+        BaseResponse<Void> baseResponse = new BaseResponse<>(UN_BOOKMARK_MESSAGE_SUCCESS, null);
+        willDoNothing().given(chatRoomService).isUnBookmarked(botMessageId);
+
+        //when & then
+        mvc.perform(
+                patch("/chatrooms/unbookmarks/" + botMessageId)
+                    .accept(APPLICATION_JSON)
+                    .contentType(APPLICATION_JSON)
+            )
+            .andExpect(status().isOk())
+            .andExpect(content().string(objectMapper.writeValueAsString(baseResponse)));
+
+        then(chatRoomService).should().isUnBookmarked(botMessageId);
     }
 
     @Test

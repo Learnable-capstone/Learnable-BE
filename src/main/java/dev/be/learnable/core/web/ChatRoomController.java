@@ -4,6 +4,8 @@ import static dev.be.learnable.common.response.ResponseCodeAndMessages.CREATE_CH
 import static dev.be.learnable.common.response.ResponseCodeAndMessages.DELETE_CHAT_ROOM_SUCCESS;
 import static dev.be.learnable.common.response.ResponseCodeAndMessages.FIND_ALL_CHAT_ROOM_SUCCESS;
 import static dev.be.learnable.common.response.ResponseCodeAndMessages.FIND_ONE_CHAT_ROOM_SUCCESS;
+import static dev.be.learnable.common.response.ResponseCodeAndMessages.BOOKMARK_MESSAGE_SUCCESS;
+import static dev.be.learnable.common.response.ResponseCodeAndMessages.UN_BOOKMARK_MESSAGE_SUCCESS;
 
 import dev.be.learnable.common.response.BaseResponse;
 import dev.be.learnable.core.dto.request.ChatRoomRequest;
@@ -15,6 +17,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,6 +49,22 @@ public class ChatRoomController {
     public BaseResponse<ChatRoomDetailResponse> findOne(@PathVariable Long chatroomId) {
         ChatRoomDetailResponse response = chatRoomService.findOne(chatroomId);
         return new BaseResponse<>(FIND_ONE_CHAT_ROOM_SUCCESS,response);
+    }
+
+    @PatchMapping("/bookmarks/{botMessageId}")
+    public BaseResponse<Void> isBookmarked(
+        @PathVariable Long botMessageId
+    ) {
+        chatRoomService.isBookmarked(botMessageId);
+        return new BaseResponse<>(BOOKMARK_MESSAGE_SUCCESS, null);
+    }
+
+    @PatchMapping("/unbookmarks/{botMessageId}")
+    public BaseResponse<Void> isUnBookmarked(
+        @PathVariable Long botMessageId
+    ) {
+        chatRoomService.isUnBookmarked(botMessageId);
+        return new BaseResponse<>(UN_BOOKMARK_MESSAGE_SUCCESS, null);
     }
 
     @DeleteMapping("/{chatroomId}")
