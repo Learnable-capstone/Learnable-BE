@@ -11,14 +11,14 @@ import lombok.Setter;
 @Setter
 @RequiredArgsConstructor
 public class QuestionDto {
-    private final Subject subject;
+    private final Long subjectId;
     private final String content;
     private final LocalDateTime createdAt;
     private final LocalDateTime modifiedAt;
 
     public static QuestionDto from(Question question) {
         return new QuestionDto(
-            question.getSubject(),
+            question.getSubject().getId(),
             question.getContent(),
             question.getCreatedAt(),
             question.getUpdatedAt()

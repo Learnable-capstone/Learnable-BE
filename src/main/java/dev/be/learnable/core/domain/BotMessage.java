@@ -5,7 +5,6 @@ import static javax.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -38,5 +37,9 @@ public class BotMessage extends BaseEntity {
 
     public static BotMessage of(ChatRoom chatRoom, String content, Boolean isBookmarked) {
         return new BotMessage(chatRoom, content, isBookmarked);
+    }
+
+    public void updateBookmarked(Boolean bookmarked) {
+        isBookmarked = bookmarked;
     }
 }

@@ -11,12 +11,16 @@ public enum ErrorCodeAndMessages implements CodeAndMessages {
      * 400 Bad Request
      */
     BAD_REQUEST_ERROR("E-BR001", "잘못된 요청입니다."),
+    CHAT_ROOM_NOT_MATCH_MEMBER_ERROR("E-BR002", "채팅방 생성자가 해당 멤버가 아닙니다."),
 
     /**
      * 404 Not Found
      */
-    NOT_FOUND_ERROR("E-NF001", "존재하지 않습니다.")
+    NOT_FOUND_ERROR("E-NF001", "존재하지 않습니다."),
+    NOT_FOUND_CHAT_ROOM_ERROR("E-NF002", "해당 ID를 가진 채팅방이 존재하지 않습니다."),
+    NOT_FOUND_BOT_MESSAGE_ERROR("E-NF003", "해당 ID를 가진 채팅이 존재하지 않습니다."),
     ;
+
 
     private final String code;
     private final String message;
