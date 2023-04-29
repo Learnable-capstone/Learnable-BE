@@ -17,10 +17,19 @@ public enum OAuthAttributes {
                 "google",
                 "google_"+ attributes.get("sub")
         );
-    });
+    }),
     /*
         카카오 추가
      */
+    KAKAO("kakao", (attributes) -> {
+       return Member.of(
+           (String) attributes.get("nickname"),
+           (String) attributes.get("account_email"),
+           "ROLE_USER",
+           "kakao",
+           "kakao_"+ attributes.get("id").toString()
+       );
+    });
 
     private final String registrationId;
     private final Function<Map<String, Object>, Member> of;
