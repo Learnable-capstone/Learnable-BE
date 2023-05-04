@@ -208,7 +208,6 @@ class ChatRoomServiceTest {
     private Member createMember(Long memberId) {
         Member member = Member.of(
             "test",
-            "password",
             "email@gmail.com",
             "ROLE_USER",
             "social_type",
