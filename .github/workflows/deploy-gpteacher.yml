@@ -10,6 +10,10 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .
+        
     steps:
       # Java Spring Gradle
       - uses: actions/checkout@v3
@@ -42,6 +46,7 @@ jobs:
       - name: Docker - Build and push
         uses: docker/build-push-action@v3
         with:
+          context: .
           push: true
           tags: hankwanjin/gpteacher:latest
 
