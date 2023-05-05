@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${MYSQL_HOST}
-    username: ${MYSQL_USERNAME}
-    password: ${MYSQL_PASSWORD}
+    url: ${{ secrets.MYSQL_HOST }}
+    username: ${{ secrets.MYSQL_USERNAME }}
+    password: ${{ secrets.MYSQL_PASSWORD }}
 
   jpa:
     defer-datasource-initialization: true
