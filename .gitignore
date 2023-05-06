@@ -38,3 +38,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# Git Submodule
+src/main/resources/*.yml

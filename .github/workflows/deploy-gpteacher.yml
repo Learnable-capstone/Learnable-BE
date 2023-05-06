@@ -17,6 +17,16 @@ jobs:
     steps:
       # Java Spring Gradle
       - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.SUBMODULE_KEY }}
+          submodules: true
+
+      # Update references
+      - name: Git Sumbodule Update
+        run: |
+          git pull --recurse-submodules
+          git submodule update --remote --recursive
+
       # Update references
       - name: Spring - Setup JDK 11
         uses: actions/setup-java@v3
