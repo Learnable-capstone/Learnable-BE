@@ -31,7 +31,7 @@ public class ChatController {
 
     @PostMapping(value = "/chat/test")
     public ChatGPTResponse testChat(@RequestBody ChatRequest chatRequest) {
-        Message message = new Message("assistant", "Hello! How can I assist you today?");
+        Message message = new Message("assistant", "안녕하세요. 반갑습니다.");
         List<Choice> choices = new ArrayList<>();
         Choice choice = new Choice();
         choice.setMessage(message);
