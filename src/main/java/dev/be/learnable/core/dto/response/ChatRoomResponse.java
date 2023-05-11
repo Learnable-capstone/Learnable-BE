@@ -11,11 +11,12 @@ public class ChatRoomResponse {
     private final Long id;
     private final Long memberId;
     private final Long subjectId;
+    private final String subjectName;
     private final String title;
     private final LocalDateTime createdAt;
 
-    public static ChatRoomResponse of(Long id, Long memberId, Long subjectId, String title, LocalDateTime createdAt) {
-        return new ChatRoomResponse(id, memberId, subjectId, title, createdAt);
+    public static ChatRoomResponse of(Long id, Long memberId, Long subjectId, String subjectName, String title, LocalDateTime createdAt) {
+        return new ChatRoomResponse(id, memberId, subjectId, subjectName, title, createdAt);
     }
 
     public static ChatRoomResponse from(ChatRoomDto chatRoomDto) {
@@ -23,6 +24,7 @@ public class ChatRoomResponse {
             chatRoomDto.getId(),
             chatRoomDto.getMemberId(),
             chatRoomDto.getSubjectId(),
+            chatRoomDto.getSubjectName(),
             chatRoomDto.getTitle(),
             chatRoomDto.getCreatedAt()
         );

@@ -15,22 +15,24 @@ public class ChatRoomDto {
     private final Long id;
     private final Long memberId;
     private final Long subjectId;
+    private final String subjectName;
     private final String title;
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
 
-    public static ChatRoomDto of(Long id, Long memberId, Long subjectId, String title, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        return new ChatRoomDto(id, memberId, subjectId, title, createdAt, updatedAt);
+    public static ChatRoomDto of(Long id, Long memberId, Long subjectId, String subjectName, String title, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        return new ChatRoomDto(id, memberId, subjectId, subjectName, title,createdAt, updatedAt);
     }
 
-    public static ChatRoomDto of(Long id, Long memberId, Long subjectId, String title) {
-        return ChatRoomDto.of(id, memberId, subjectId, title, null, null);
+    public static ChatRoomDto of(Long id, Long memberId, Long subjectId, String subjectName, String title) {
+        return ChatRoomDto.of(id, memberId, subjectId, subjectName,title, null, null);
     }
     public static ChatRoomDto from(ChatRoom chatRoom) {
         return ChatRoomDto.of(
             chatRoom.getId(),
             chatRoom.getMember().getId(),
             chatRoom.getSubject().getId(),
+            chatRoom.getSubject().getSubjectName(),
             chatRoom.getTitle(),
             chatRoom.getCreatedAt(),
             chatRoom.getUpdatedAt()

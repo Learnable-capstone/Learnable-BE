@@ -223,6 +223,7 @@ class ChatRoomServiceTest {
             1L,
             1L,
             1L,
+            "test-subject",
             "test-title",
             LocalDateTime.now(),
             LocalDateTime.now()

@@ -12,10 +12,12 @@ public class ChatRoomRequest {
     private final Long id;
     private final Long memberId;
     private final Long subjectId;
+
+    private final String subjectName;
     private final String title;
 
-    public static ChatRoomRequest of(Long id, Long memberId, Long subjectId, String title) {
-        return new ChatRoomRequest(id, memberId, subjectId, title);
+    public static ChatRoomRequest of(Long id, Long memberId, Long subjectId, String subjectName, String title) {
+        return new ChatRoomRequest(id, memberId, subjectId, subjectName,title);
     }
 
     public ChatRoomDto toDto() {
@@ -23,6 +25,7 @@ public class ChatRoomRequest {
             id,
             memberId,
             subjectId,
+            subjectName,
             title
         );
     }
