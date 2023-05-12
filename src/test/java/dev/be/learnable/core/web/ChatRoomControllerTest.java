@@ -56,7 +56,7 @@ class ChatRoomControllerTest {
     @DisplayName("[POST] 채팅방 생성 성공 테스트")
     void createChatRoom_success() throws Exception {
         //given
-        ChatRoomRequest chatRoomRequest = ChatRoomRequest.of(1L, 1L, 1L, "test-title");
+        ChatRoomRequest chatRoomRequest = ChatRoomRequest.of(1L, 1L, "test-subject", "test-title");
         BaseResponse<Void> baseResponse = new BaseResponse<>(CREATE_CHAT_ROOM_SUCCESS, null);
         willDoNothing().given(chatRoomService).create(any(ChatRoomDto.class));
 
