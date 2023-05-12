@@ -70,6 +70,14 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
+processResources.dependsOn('copyGitSubmodule')
+
+task copyGitSubmodule(type: Copy) {
+    from './config'
+    into './src/main/resources'
+    include '*.yml'
+}
+
 // Querydsl 설정부
 def generated = 'src/main/generated'
 

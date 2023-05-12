@@ -16,5 +16,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface OpenAIClient {
 
     @PostMapping(value = "${openai-service.urls.chat-url}", headers = {"Content-Type=application/json"})
-    ChatGPTResponse chat(@RequestBody ChatGPTRequest chatGPTRequest, @RequestParam Long chatRoomId);
+    ChatGPTResponse chat(@RequestBody ChatGPTRequest chatGPTRequest, @RequestParam Long chatroomId);
 }

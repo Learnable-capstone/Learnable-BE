@@ -35,13 +35,12 @@ public class OpenAIClientService {
 
     // GPT 질문에 대한 유저 응답
     @Transactional
-    public ChatGPTResponse chat(ChatRequest chatRequest, Long chatRoomId) {
-        ChatRoom chatRoom = chatRoomRepository.getReferenceById(chatRoomId);
+    public ChatGPTResponse chat(ChatRequest chatRequest, Long chatroomId) {
+        ChatRoom chatRoom = chatRoomRepository.getReferenceById(chatroomId);
         UserMessage userMessage = UserMessage.of(chatRoom,chatRequest.getQuestion(),false);
         userMessageRepository.save(userMessage);
-        List<BotMessage> botMessage = botMessageRepository.findBotMessageByChatRoom_Id(chatRoomId);
+        List<BotMessage> botMessage = botMessageRepository.findBotMessageByChatRoom_Id(chatroomId);
         String question = botMessage.get(botMessage.size()-1).getContent();
-        System.out.println(question);
         Message message = Message.builder()
                 .role(ROLE_USER)
                 .content(question + MESSAGE_TYPE_FIRST + chatRequest.getQuestion() + MESSAGE_TYPE_SECOND)
@@ -50,7 +49,7 @@ public class OpenAIClientService {
                 .model(openAIClientConfig.getModel())
                 .messages(Collections.singletonList(message))
                 .build();
-        return openAIClient.chat(chatGPTRequest,chatRoomId);
+        return openAIClient.chat(chatGPTRequest,chatroomId);
     }
 
 }

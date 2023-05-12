@@ -12,6 +12,8 @@ import java.io.Serializable;
 @Getter
 @Setter
 public class Message implements Serializable {
+    // role 역할
+    // system : gpt에게 명령 , assistant : gpt , user : 사용자
     private String role;
     private String content;
 

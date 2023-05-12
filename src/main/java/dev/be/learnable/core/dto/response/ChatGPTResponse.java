@@ -1,5 +1,8 @@
-package dev.be.learnable.core.dto;
+package dev.be.learnable.core.dto.response;
 
+import lombok.AllArgsConstructor;
+import dev.be.learnable.core.dto.Choice;
+import dev.be.learnable.core.dto.Usage;
 import lombok.Setter;
 import lombok.Getter;
 
@@ -9,6 +12,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class ChatGPTResponse implements Serializable {
     private String id;
     private String object;
@@ -16,4 +20,11 @@ public class ChatGPTResponse implements Serializable {
     private LocalDate created;
     private List<Choice> choices;
     private Usage usage;
+
+    public String getContent(){
+        if(choices != null && !choices.isEmpty()){
+            return choices.get(0).getMessage().getContent();
+        }
+        return null;
+    }
 }

@@ -36,6 +36,8 @@ public class SecurityConfig {
                 .and()
                 //요청에 대한 인가 처리 설정
                 .authorizeRequests()
+                        // API 테스트를 위해 임시 허용
+                        .antMatchers("/**").permitAll()
                 //인증되지 않은 사용자도 접근 가능하도록 허용 (로그인, 토큰발급에는 인증이 불필요)
                 .anyRequest().permitAll()
                 .and()

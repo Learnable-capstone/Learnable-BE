@@ -1,5 +1,5 @@
 FROM adoptopenjdk/openjdk11
 
-COPY ./build/libs/*.jar gpteacher.jar
+COPY ./build/libs/learnable-0.0.1-SNAPSHOT.jar app.jar
 
-ENTRYPOINT ["java", "-Dspring.profiles.active=prod", "-jar", "/gpteacher.jar"]
+ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=prod", "app.jar"]

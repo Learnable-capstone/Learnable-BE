@@ -1,0 +1,4 @@
+[submodule "config"]
+	path = config
+	url = https://github.com/Learnable-capstone/private-yml.git
+	branch = main
