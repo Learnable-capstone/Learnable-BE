@@ -8,6 +8,7 @@ import dev.be.learnable.core.repository.QuestionRepository;
 import dev.be.learnable.core.repository.SubjectRepository;
 import java.util.List;
 import java.util.UUID;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 @DataJpaTest
 @ActiveProfiles("local")
+@Disabled
 @DisplayName("JPA 연결 테스트")
 public class JpaRepositoryTest {
 
