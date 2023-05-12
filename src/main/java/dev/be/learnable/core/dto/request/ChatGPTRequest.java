@@ -1,5 +1,6 @@
-package dev.be.learnable.core.dto;
+package dev.be.learnable.core.dto.request;
 
+import dev.be.learnable.core.dto.Message;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
