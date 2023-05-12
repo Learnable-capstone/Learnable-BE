@@ -222,7 +222,6 @@ class ChatRoomServiceTest {
         return ChatRoomDto.of(
             1L,
             1L,
-            1L,
             "test-subject",
             "test-title",
             LocalDateTime.now(),
