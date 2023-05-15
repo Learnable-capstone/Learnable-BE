@@ -51,5 +51,4 @@ public class OpenAIClientService {
                 .build();
         return openAIClient.chat(chatGPTRequest,chatroomId);
     }
-
 }

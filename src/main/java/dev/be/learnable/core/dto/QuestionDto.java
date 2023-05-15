@@ -13,6 +13,7 @@ import lombok.Setter;
 public class QuestionDto {
     private final Long subjectId;
     private final String content;
+    private final String answer;
     private final LocalDateTime createdAt;
     private final LocalDateTime modifiedAt;
 
@@ -20,6 +21,7 @@ public class QuestionDto {
         return new QuestionDto(
             question.getSubject().getId(),
             question.getContent(),
+            question.getAnswer(),
             question.getCreatedAt(),
             question.getUpdatedAt()
         );

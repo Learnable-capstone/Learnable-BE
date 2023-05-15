@@ -1,19 +1,15 @@
 package dev.be.learnable.core.domain;
 
-import static javax.persistence.FetchType.LAZY;
-import static javax.persistence.GenerationType.*;
-import static lombok.AccessLevel.*;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+import javax.persistence.*;
+
+import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Getter
@@ -29,12 +25,16 @@ public class Question extends BaseEntity {
 
     private String content;
 
-    private Question(Subject subject, String content) {
+    @Column(length = 1000)
+    private String answer;
+
+    private Question(Subject subject, String content, String answer) {
         this.subject = subject;
         this.content = content;
+        this.answer = answer;
     }
 
-    public static Question of(Subject subject, String content) {
-        return new Question(subject, content);
+    public static Question of(Subject subject, String content, String answer) {
+        return new Question(subject, content,answer);
     }
 }
