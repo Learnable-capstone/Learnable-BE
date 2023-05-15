@@ -43,7 +43,7 @@ public class JpaRepositoryTest {
         //given
         long prevCount = questionRepository.count();
         Subject subject = subjectRepository.getReferenceById(1L);
-        Question question = Question.of(subject, "new Question");
+        Question question = Question.of(subject, "new Question", "new Answer");
 
         //when
         questionRepository.save(question);
