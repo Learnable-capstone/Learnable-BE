@@ -19,6 +19,7 @@ public class ChatRoomDto {
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
 
+
     public static ChatRoomDto of(Long chatroomId,Long memberId, Long subjectId, String title, LocalDateTime createdAt, LocalDateTime updatedAt) {
         return new ChatRoomDto(chatroomId, memberId, subjectId, title,createdAt, updatedAt);
     }
@@ -26,6 +27,11 @@ public class ChatRoomDto {
     public static ChatRoomDto of(Long chatroomId, Long memberId, Long subjectId, String title) {
         return ChatRoomDto.of(chatroomId, memberId, subjectId, title, null, null);
     }
+
+    public static ChatRoomDto of(Long memberId, Long subjectId, String title) {
+        return ChatRoomDto.of(null, memberId, subjectId, title, null, null);
+    }
+
     public static ChatRoomDto from(ChatRoom chatRoom) {
         return ChatRoomDto.of(
             chatRoom.getId(),
