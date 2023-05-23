@@ -8,17 +8,19 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public class ChatRoomResponse {
+    private final Long chatroomId;
     private final Long memberId;
     private final Long subjectId;
     private final String title;
     private final LocalDateTime createdAt;
 
-    public static ChatRoomResponse of(Long memberId, Long subjectId, String title, LocalDateTime createdAt) {
-        return new ChatRoomResponse(memberId, subjectId, title, createdAt);
+    public static ChatRoomResponse of(Long chatroomId, Long memberId, Long subjectId, String title, LocalDateTime createdAt) {
+        return new ChatRoomResponse(chatroomId, memberId, subjectId, title, createdAt);
     }
 
     public static ChatRoomResponse from(ChatRoomDto chatRoomDto) {
         return ChatRoomResponse.of(
+            chatRoomDto.getChatroomId(),
             chatRoomDto.getMemberId(),
             chatRoomDto.getSubjectId(),
             chatRoomDto.getTitle(),

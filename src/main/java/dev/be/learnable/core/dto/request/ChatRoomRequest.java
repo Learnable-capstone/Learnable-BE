@@ -20,6 +20,7 @@ public class ChatRoomRequest {
 
     public ChatRoomDto toDto() {
         return ChatRoomDto.of(
+            toDto().getChatroomId(),
             memberId,
             subjectId,
             title
