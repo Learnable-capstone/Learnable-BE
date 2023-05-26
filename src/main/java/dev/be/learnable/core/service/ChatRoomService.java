@@ -103,6 +103,8 @@ public class ChatRoomService {
     public void delete(Long chatroomId) {
         log.info("[채팅방 삭제] chatroomId = {}", chatroomId);
 
+        userMessageRepository.deleteAllByChatRoom_Id(chatroomId);
+        botMessageRepository.deleteAllByChatRoom_Id(chatroomId);
         chatRoomRepository.deleteById(chatroomId);
     }
 }

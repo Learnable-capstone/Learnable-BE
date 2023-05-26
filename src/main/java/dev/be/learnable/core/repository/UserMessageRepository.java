@@ -6,4 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserMessageRepository extends JpaRepository<UserMessage, Long> {
     List<UserMessage> findUserMessageByChatRoom_Id(Long chatroomId);
+
+    void deleteAllByChatRoom_Id(Long chatroomId);
 }
