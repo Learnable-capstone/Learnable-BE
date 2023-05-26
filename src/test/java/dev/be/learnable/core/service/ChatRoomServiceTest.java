@@ -181,6 +181,7 @@ class ChatRoomServiceTest {
         BotMessage botMessage = BotMessage.of(
             createChatRoom(),
             "content",
+            "answer",
             Boolean.FALSE
         );
         ReflectionTestUtils.setField(botMessage, "id", botMessageId);
