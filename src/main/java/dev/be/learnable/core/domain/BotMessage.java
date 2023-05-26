@@ -4,10 +4,8 @@ import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,16 +25,20 @@ public class BotMessage extends BaseEntity {
 
     private String content;
 
+    @Column(length = 1000)
+    private String answer;
+
     private Boolean isBookmarked;
 
-    private BotMessage(ChatRoom chatRoom, String content, Boolean isBookmarked) {
+    private BotMessage(ChatRoom chatRoom, String content, String answer,Boolean isBookmarked) {
         this.chatRoom = chatRoom;
         this.content = content;
+        this.answer = answer;
         this.isBookmarked = isBookmarked;
     }
 
-    public static BotMessage of(ChatRoom chatRoom, String content, Boolean isBookmarked) {
-        return new BotMessage(chatRoom, content, isBookmarked);
+    public static BotMessage of(ChatRoom chatRoom, String content, String answer,Boolean isBookmarked) {
+        return new BotMessage(chatRoom, content, answer ,isBookmarked);
     }
 
     public void updateBookmarked(Boolean bookmarked) {

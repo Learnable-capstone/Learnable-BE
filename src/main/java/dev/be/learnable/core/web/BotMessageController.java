@@ -1,13 +1,12 @@
 package dev.be.learnable.core.web;
 
 
-import dev.be.learnable.core.dto.response.ChatGPTResponse;
-import dev.be.learnable.core.dto.request.ChatRequest;
 import dev.be.learnable.core.service.BotMessageService;
-import dev.be.learnable.core.service.OpenAIClientService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,4 +22,9 @@ public class BotMessageController {
         return botMessageService.getRandomQuestionBySubject(chatroomId,subjectId);
     }
 
+    // 채팅방 별 가장 최근 질문 정답
+    @GetMapping("{chatroomId}/answers")
+    public String getAnswerByRandomQuestion(@PathVariable Long chatroomId){
+        return botMessageService.getAnswerByQuestion(chatroomId);
+    }
 }
