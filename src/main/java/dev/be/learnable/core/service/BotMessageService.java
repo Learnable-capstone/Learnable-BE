@@ -8,6 +8,8 @@ import dev.be.learnable.core.repository.ChatRoomRepository;
 import dev.be.learnable.core.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,8 +32,15 @@ public class BotMessageService {
         Random random = new Random();
         int randomIndex = random.nextInt(questions.size());
         String content = questions.get(randomIndex).getContent();
-        BotMessage botMessage = BotMessage.of(chatRoom,content,false);
+        String answer = questions.get(randomIndex).getAnswer();
+        BotMessage botMessage = BotMessage.of(chatRoom,content, answer,false);
         botMessageRepository.save(botMessage);
         return content;
+    }
+
+    public String getAnswerByQuestion(Long chatRoomId){
+        Pageable pageable = PageRequest.of(0,1);
+        List<String> latestAnswer = botMessageRepository.findLatestAnswerByChatRoomId(chatRoomId,pageable);
+        return latestAnswer.get(0);
     }
 }
