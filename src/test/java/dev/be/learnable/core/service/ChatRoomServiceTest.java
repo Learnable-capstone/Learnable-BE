@@ -169,7 +169,9 @@ class ChatRoomServiceTest {
         ChatRoom chatRoom = ChatRoom.of(
             createMember(1L),
             createSubject(1L),
-            "title"
+            "title",
+            0L,
+            0L
         );
         ReflectionTestUtils.setField(chatRoom, "id", chatroomId);
         return chatRoom;
@@ -225,6 +227,8 @@ class ChatRoomServiceTest {
             1L,
             1L,
             "test-title",
+            0L,
+            0L,
             LocalDateTime.now(),
             LocalDateTime.now()
         );
