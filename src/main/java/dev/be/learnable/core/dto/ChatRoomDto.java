@@ -47,7 +47,10 @@ public class ChatRoomDto {
         return ChatRoom.of(
             member,
             subject,
-            title
+            title,
+            0L,
+            0L,
+            0.0
         );
     }
 }

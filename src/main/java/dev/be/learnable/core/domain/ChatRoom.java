@@ -34,13 +34,24 @@ public class ChatRoom extends BaseEntity{
 
     private String title;
 
-    private ChatRoom(Member member, Subject subject, String title) {
+    private Long answerCnt; // 유저 대답 수
+
+    private Long totalScore; // 채팅방에서 얻은 점수
+
+    private Double avgScore; // 평균 점수
+
+    public ChatRoom(Member member, Subject subject, String title, Long answerCnt, Long totalScore,
+        Double avgScore) {
         this.member = member;
         this.subject = subject;
         this.title = title;
+        this.answerCnt = answerCnt;
+        this.totalScore = totalScore;
+        this.avgScore = avgScore;
     }
 
-    public static ChatRoom of(Member member, Subject subject, String title) {
-        return new ChatRoom(member, subject, title);
+    public static ChatRoom of(Member member, Subject subject, String title, Long answerCnt, Long totalScore,
+        Double avgScore) {
+        return new ChatRoom(member, subject, title, answerCnt, totalScore, avgScore);
     }
 }
