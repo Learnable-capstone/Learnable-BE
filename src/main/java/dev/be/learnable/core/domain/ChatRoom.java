@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,20 +39,20 @@ public class ChatRoom extends BaseEntity{
 
     private Long totalScore; // 채팅방에서 얻은 점수
 
-    private Double avgScore; // 평균 점수
+    public void updateChatroomInfo(Long answerCnt, Long score) {
+        this.answerCnt = answerCnt + 1;
+        this.totalScore += score;
+    }
 
-    public ChatRoom(Member member, Subject subject, String title, Long answerCnt, Long totalScore,
-        Double avgScore) {
+    public ChatRoom(Member member, Subject subject, String title, Long answerCnt, Long totalScore) {
         this.member = member;
         this.subject = subject;
         this.title = title;
         this.answerCnt = answerCnt;
         this.totalScore = totalScore;
-        this.avgScore = avgScore;
     }
 
-    public static ChatRoom of(Member member, Subject subject, String title, Long answerCnt, Long totalScore,
-        Double avgScore) {
-        return new ChatRoom(member, subject, title, answerCnt, totalScore, avgScore);
+    public static ChatRoom of(Member member, Subject subject, String title, Long answerCnt, Long totalScore) {
+        return new ChatRoom(member, subject, title, answerCnt, totalScore);
     }
 }

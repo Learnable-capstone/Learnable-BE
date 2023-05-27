@@ -2,6 +2,7 @@ package dev.be.learnable.core.service;
 
 
 import dev.be.learnable.common.config.OpenAIClientConfig;
+import dev.be.learnable.common.exception.NotFoundChatRoomException;
 import dev.be.learnable.core.domain.BotMessage;
 import dev.be.learnable.core.domain.ChatRoom;
 import dev.be.learnable.core.domain.UserMessage;
@@ -12,6 +13,8 @@ import dev.be.learnable.core.dto.response.ChatGPTResponse;
 import dev.be.learnable.core.repository.BotMessageRepository;
 import dev.be.learnable.core.repository.ChatRoomRepository;
 import dev.be.learnable.core.repository.UserMessageRepository;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,7 +39,9 @@ public class OpenAIClientService {
     // GPT 질문에 대한 유저 응답
     @Transactional
     public ChatGPTResponse chat(ChatRequest chatRequest, Long chatroomId) {
-        ChatRoom chatRoom = chatRoomRepository.getReferenceById(chatroomId);
+        ChatRoom chatRoom = chatRoomRepository.findById(chatroomId)
+            .orElseThrow(NotFoundChatRoomException::new);
+
         UserMessage userMessage = UserMessage.of(chatRoom,chatRequest.getQuestion(),false);
         userMessageRepository.save(userMessage);
         List<BotMessage> botMessage = botMessageRepository.findBotMessageByChatRoom_Id(chatroomId);
@@ -49,6 +54,21 @@ public class OpenAIClientService {
                 .model(openAIClientConfig.getModel())
                 .messages(Collections.singletonList(message))
                 .build();
-        return openAIClient.chat(chatGPTRequest,chatroomId);
+
+        ChatGPTResponse response = openAIClient.chat(chatGPTRequest, chatroomId);
+
+        Pattern pattern = Pattern.compile("(\\d+)점");
+        Matcher matcher = pattern.matcher(response.getContent());
+        long minScore = 10L;
+        boolean flag = false;
+        while(matcher.find()) {
+            flag = true;
+            minScore = Math.min(minScore, Long.parseLong(matcher.group(1)));
+        }
+        if (flag) chatRoom.updateChatroomInfo(chatRoom.getAnswerCnt(),minScore);
+        else chatRoom.updateChatroomInfo(chatRoom.getAnswerCnt(), 0L);
+        return response;
     }
+
+
 }

@@ -22,7 +22,9 @@ public class ChatRoomRequest {
         return ChatRoomDto.of(
             memberId,
             subjectId,
-            title
+            title,
+            0L,
+            0L
         );
     }
 }

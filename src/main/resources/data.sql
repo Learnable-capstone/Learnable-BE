@@ -459,14 +459,14 @@ PUT은 안전하지 않은 수정이 주로 이루어집니다. 즉, 전체 데�
 따라서, 전체 데이터를 한 번에 수정하고 안전하지 않은 경우 PUT을 사용합니다. 그러나 일부 필드만 수정하고 안전한 경우 PATCH를 사용합니다.' ,now(), now());
 
 -- 채팅방 6개
-INSERT INTO chat_room (member_id, subject_id, title, created_at, updated_at)
+INSERT INTO chat_room (member_id, subject_id, title, answer_cnt, total_score, created_at, updated_at)
 VALUES
-    (1, 1, '운영체제', now(), now()),
-    (1, 2, '데이터베이스', now(), now()),
-    (1, 3, '컴퓨터구조', now(), now()),
-    (1, 4, '자료구조', now(), now()),
-    (1, 5, '알고리즘', now(), now()),
-    (1, 6, '컴퓨터네트워크', now(), now());
+    (1, 1, '운영체제', 0, 0, now(), now()),
+    (1, 2, '데이터베이스', 0, 0, now(), now()),
+    (1, 3, '컴퓨터구조', 0, 0,now(), now()),
+    (1, 4, '자료구조', 0, 0,now(), now()),
+    (1, 5, '알고리즘', 0, 0,now(), now()),
+    (1, 6, '컴퓨터네트워크', 0, 0,now(), now());
 -- 봇 메시지 1개 (북마크 되어있음)
 insert into bot_message (chat_room_id, content, answer ,is_bookmarked, created_at, updated_at) values
 (1, 'bot-message1', 'answer1' ,true, now(), now());
