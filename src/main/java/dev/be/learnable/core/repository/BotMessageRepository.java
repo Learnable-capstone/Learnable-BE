@@ -14,4 +14,5 @@ public interface BotMessageRepository extends JpaRepository<BotMessage, Long> {
     @Query("SELECT b.answer FROM BotMessage b WHERE b.chatRoom.id = :chatRoomId ORDER BY b.id DESC")
     List<String> findLatestAnswerByChatRoomId(@Param("chatRoomId") Long chatRoomId, Pageable pageable);
 
+    void deleteAllByChatRoom_Id(Long chatroomId);
 }
