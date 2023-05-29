@@ -16,20 +16,22 @@ public class ChatRoomDto {
     private final Long memberId;
     private final Long subjectId;
     private final String title;
+    private final Long answerCnt; // 유저 대답 수
+    private final Long totalScore; // 채팅방에서 얻은 점수
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
 
 
-    public static ChatRoomDto of(Long chatroomId,Long memberId, Long subjectId, String title, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        return new ChatRoomDto(chatroomId, memberId, subjectId, title,createdAt, updatedAt);
+    public static ChatRoomDto of(Long chatroomId,Long memberId, Long subjectId, String title,Long answerCnt, Long totalScore, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        return new ChatRoomDto(chatroomId, memberId, subjectId, title, answerCnt, totalScore,createdAt, updatedAt);
     }
 
-    public static ChatRoomDto of(Long chatroomId, Long memberId, Long subjectId, String title) {
-        return ChatRoomDto.of(chatroomId, memberId, subjectId, title, null, null);
+    public static ChatRoomDto of(Long chatroomId, Long memberId, Long subjectId, String title, Long answerCnt, Long totalScore) {
+        return ChatRoomDto.of(chatroomId, memberId, subjectId, title, answerCnt, totalScore, null, null);
     }
 
-    public static ChatRoomDto of(Long memberId, Long subjectId, String title) {
-        return ChatRoomDto.of(null, memberId, subjectId, title, null, null);
+    public static ChatRoomDto of(Long memberId, Long subjectId, String title,Long answerCnt, Long totalScore) {
+        return ChatRoomDto.of(null, memberId, subjectId, title, answerCnt, totalScore, null, null);
     }
 
     public static ChatRoomDto from(ChatRoom chatRoom) {
@@ -38,6 +40,8 @@ public class ChatRoomDto {
             chatRoom.getMember().getId(),
             chatRoom.getSubject().getId(),
             chatRoom.getTitle(),
+            chatRoom.getAnswerCnt(),
+            chatRoom.getTotalScore(),
             chatRoom.getCreatedAt(),
             chatRoom.getUpdatedAt()
         );
@@ -47,7 +51,9 @@ public class ChatRoomDto {
         return ChatRoom.of(
             member,
             subject,
-            title
+            title,
+            0L,
+            0L
         );
     }
 }
