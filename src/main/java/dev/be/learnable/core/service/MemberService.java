@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
+import org.webjars.NotFoundException;
 
 import java.util.Map;
 
@@ -34,6 +35,14 @@ public class MemberService {
                     .build();
             result.addAttribute("userId",memberRepository.save(newMember).getId());
         }
+        return result;
+    }
+
+    public Map<String, Object> getUserInfo(Long userId){
+        Member member = memberRepository.findById(userId).orElseThrow(()-> new NotFoundException("해당 유저를 찾을 수 없습니다."));
+        ModelMap result = new ModelMap();
+        result.addAttribute("username", member.getUsername());
+        result.addAttribute("createdAt", member.getCreatedAt());
         return result;
     }
 }
