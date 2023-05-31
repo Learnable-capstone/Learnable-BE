@@ -1,6 +1,7 @@
 package dev.be.learnable.core.service;
 
 import dev.be.learnable.core.domain.Member;
+import dev.be.learnable.core.dto.request.MemberInfoRequest;
 import dev.be.learnable.core.dto.request.MemberRequest;
 import dev.be.learnable.core.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,7 @@ public class MemberService {
                     .role("ROLE_USER")
                     .socialType(memberRequest.getSocialType())
                     .socialId(memberRequest.getSocialId())
+                    .profileIdx(memberRequest.getProfileIdx())
                     .build();
             result.addAttribute("userId",memberRepository.save(newMember).getId());
         }
@@ -42,7 +44,15 @@ public class MemberService {
         Member member = memberRepository.findById(userId).orElseThrow(()-> new NotFoundException("해당 유저를 찾을 수 없습니다."));
         ModelMap result = new ModelMap();
         result.addAttribute("username", member.getUsername());
+        result.addAttribute("profileIdx", member.getProfileIdx());
         result.addAttribute("createdAt", member.getCreatedAt());
         return result;
+    }
+
+    public void updateUserInfo(Long userId, MemberInfoRequest memberRequest) {
+        Member member = memberRepository.findById(userId)
+            .orElseThrow(() -> new NotFoundException("해당 유저를 찾을 수 없습니다."));
+        member.setUsername(memberRequest.getUsername());
+        member.setProfileIdx(memberRequest.getProfileIdx());
     }
 }

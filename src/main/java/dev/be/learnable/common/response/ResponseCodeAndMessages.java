@@ -12,6 +12,11 @@ public enum ResponseCodeAndMessages implements CodeAndMessages {
     OAUTH_LOGIN_SUCCESS("S-OA001", "로그인(혹은 회원가입)에 성공했습니다."),
 
     /**
+     * Member
+     */
+    UPDATE_MEMBER_INFO_SUCCESS("S-MI001", "유저 정보 업데이트에 성공했습니다."),
+
+    /**
      * ChatRoom
      */
     CREATE_CHAT_ROOM_SUCCESS("S-CR001", "채팅방 생성에 성공했습니다."),

@@ -1,6 +1,6 @@
 -- 멤버 1명
-insert into member (username, email, role, social_type, social_id, created_at, updated_at) values
-('테스트한글', 'test@gmail.com', 'ROLE_USER', 'google', 'google_id', now(), now());
+insert into member (username, email, role, social_type, social_id, profile_idx, created_at, updated_at) values
+('테스트한글', 'test@gmail.com', 'ROLE_USER', 'google', 'google_id', 1,now(), now());
 
 -- 운영체제         : operating_system , subject_id = 1
 -- 데이터베이스      : database_system , subject_id = 2

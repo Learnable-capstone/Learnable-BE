@@ -7,10 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class MemberRequest {
+public class MemberInfoRequest {
     private final String username;
-    private final String email;
-    private final String socialType;
-    private final String socialId;
     private final Long profileIdx;
 }
