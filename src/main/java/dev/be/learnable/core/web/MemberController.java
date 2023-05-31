@@ -1,5 +1,6 @@
 package dev.be.learnable.core.web;
 
+import static dev.be.learnable.common.response.ResponseCodeAndMessages.DELETE_MEMBER_SUCCESS;
 import static dev.be.learnable.common.response.ResponseCodeAndMessages.UPDATE_MEMBER_INFO_SUCCESS;
 
 import dev.be.learnable.common.response.BaseResponse;
@@ -33,5 +34,11 @@ public class MemberController {
         @RequestBody MemberInfoRequest memberRequest) {
         memberService.updateUserInfo(userId, memberRequest);
         return new BaseResponse<>(UPDATE_MEMBER_INFO_SUCCESS, null);
+    }
+
+    @DeleteMapping("/{userId}")
+    public BaseResponse<Void> deleteUser(@PathVariable Long userId) {
+        memberService.deleteUser(userId);
+        return new BaseResponse<>(DELETE_MEMBER_SUCCESS, null);
     }
 }

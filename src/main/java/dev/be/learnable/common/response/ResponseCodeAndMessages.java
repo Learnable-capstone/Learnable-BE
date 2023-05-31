@@ -15,6 +15,7 @@ public enum ResponseCodeAndMessages implements CodeAndMessages {
      * Member
      */
     UPDATE_MEMBER_INFO_SUCCESS("S-MI001", "유저 정보 업데이트에 성공했습니다."),
+    DELETE_MEMBER_SUCCESS("S-MI002", "회원탈퇴 성공했습니다."),
 
     /**
      * ChatRoom

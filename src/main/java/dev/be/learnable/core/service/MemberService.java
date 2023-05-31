@@ -1,9 +1,14 @@
 package dev.be.learnable.core.service;
 
+import dev.be.learnable.core.domain.ChatRoom;
 import dev.be.learnable.core.domain.Member;
 import dev.be.learnable.core.dto.request.MemberInfoRequest;
 import dev.be.learnable.core.dto.request.MemberRequest;
+import dev.be.learnable.core.repository.BotMessageRepository;
+import dev.be.learnable.core.repository.ChatRoomRepository;
 import dev.be.learnable.core.repository.MemberRepository;
+import dev.be.learnable.core.repository.UserMessageRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,6 +24,9 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final ChatRoomRepository chatRoomRepository;
+    private final UserMessageRepository userMessageRepository;
+    private final BotMessageRepository botMessageRepository;
 
     public Map<String, Object> login(MemberRequest memberRequest){
         ModelMap result = new ModelMap();
@@ -54,5 +62,15 @@ public class MemberService {
             .orElseThrow(() -> new NotFoundException("해당 유저를 찾을 수 없습니다."));
         member.setUsername(memberRequest.getUsername());
         member.setProfileIdx(memberRequest.getProfileIdx());
+    }
+
+    public void deleteUser(Long userId) {
+        List<ChatRoom> rooms = chatRoomRepository.findChatRoomsByMember_Id(userId);
+        for (ChatRoom room : rooms) {
+            userMessageRepository.deleteAllByChatRoom_Id(room.getId());
+            botMessageRepository.deleteAllByChatRoom_Id(room.getId());
+        }
+        chatRoomRepository.deleteAllByMember_Id(userId);
+        memberRepository.deleteById(userId);
     }
 }
