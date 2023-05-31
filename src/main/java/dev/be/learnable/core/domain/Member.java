@@ -26,18 +26,20 @@ public class Member extends BaseEntity {
     private String role; // ROLE_USER , ROLE_ADMIN
     private String socialType;
     private String socialId;
+    private Long profileIdx;
 
     @Builder
-    private Member(String username, String email, String role, String socialType, String socialId){
+    private Member(String username, String email, String role, String socialType, String socialId, Long profileIdx){
         this.username = username;
         this.email = email;
         this.role = role;
         this.socialType = socialType;
         this.socialId = socialId;
+        this.profileIdx = profileIdx;
     }
 
-    public static Member of(String username, String email, String role, String socialType, String socialId) {
-        return new Member(username, email,role, socialType, socialId);
+    public static Member of(String username, String email, String role, String socialType, String socialId, Long profileIdx) {
+        return new Member(username, email,role, socialType, socialId, profileIdx);
     }
     public Member update(String username, String email){
         this.username = username;
