@@ -62,7 +62,7 @@ public class OAuthService implements OAuth2UserService<OAuth2UserRequest, OAuth2
                 .map(m -> m.update(member.getUsername(), member.getEmail())) // OAuth 서비스 사이트에서 유저 정보 변경이 있을 수 있기 때문에 우리 DB에도 update
                 .orElse(Member.of(member.getUsername(), member.getEmail(), member.getRole(),
                         member.getSocialType()
-                , member.getSocialId()));
+                , member.getSocialId(), member.getProfileIdx()));
 
         return memberRepository.save(savedmember);
     }

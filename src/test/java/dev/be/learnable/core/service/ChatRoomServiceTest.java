@@ -214,7 +214,8 @@ class ChatRoomServiceTest {
             "email@gmail.com",
             "ROLE_USER",
             "social_type",
-            "social_id"
+            "social_id",
+            1L
         );
         ReflectionTestUtils.setField(member, "id", memberId);
         return member;

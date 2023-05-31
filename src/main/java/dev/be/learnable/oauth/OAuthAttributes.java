@@ -15,7 +15,8 @@ public enum OAuthAttributes {
                 (String) attributes.get("email"),
                 "ROLE_USER",
                 "google",
-                "google_"+ attributes.get("sub")
+                "google_"+ attributes.get("sub"),
+            1L
         );
     }),
     /*
@@ -27,7 +28,8 @@ public enum OAuthAttributes {
            (String) attributes.get("account_email"),
            "ROLE_USER",
            "kakao",
-           "kakao_"+ attributes.get("id").toString()
+           "kakao_"+ attributes.get("id").toString(),
+           1L
        );
     });
 
